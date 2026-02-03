@@ -27,6 +27,7 @@
     h1 {
       font-size: 3.5rem;
       margin-bottom: 40px;
+      font-weight: 700;
     }
 
     .buttons {
@@ -49,6 +50,7 @@
       min-height: 2.5rem;
       color: #fffbe8;
       white-space: nowrap;
+      text-align: center;
     }
 
     button {
@@ -64,6 +66,11 @@
       transition: transform 0.3s ease;
     }
 
+    #no {
+      transition: transform 0.3s ease;
+    }
+
+    /* FULLSCREEN COÁ – LẦN 4 */
     .fullscreen {
       position: fixed;
       inset: 0;
@@ -84,9 +91,9 @@
       font-size: 3rem;
       margin-top: 24px;
       white-space: normal;
-      text-align: center;
     }
 
+    /* WIN */
     .win {
       position: fixed;
       inset: 0;
@@ -130,9 +137,9 @@
       document.body.innerHTML = '<div class="win">HOAN HÔ!!!</div>';
     }
 
-    yesBtn.addEventListener("click", win);
+    yesBtn.onclick = win;
 
-    noBtn.addEventListener("click", () => {
+    noBtn.onclick = () => {
       noCount++;
 
       if (noCount === 1) sub.textContent = "Đùa em Chi ơi?";
@@ -147,7 +154,7 @@
         return;
       }
 
-      // LẦN 4
+      /* LẦN 4: COÁ CHIẾM TOÀN MÀN HÌNH */
       box.innerHTML = `
         <div class="fullscreen">
           <button id="yesBig">Coá</button>
@@ -155,8 +162,8 @@
         </div>
       `;
 
-      document.getElementById("yesBig").addEventListener("click", win);
-    });
+      document.getElementById("yesBig").onclick = win;
+    };
   </script>
 
 </body>
