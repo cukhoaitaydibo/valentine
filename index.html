@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
   <title>Valentine</title>
@@ -11,13 +11,13 @@
     body {
       margin: 0;
       height: 100vh;
+      background: #e84a5f;
+      font-family: 'Dancing Script', cursive;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #e84a5f;
-      color: #fff;
-      font-family: 'Dancing Script', cursive;
       overflow: hidden;
+      color: #fff;
     }
 
     .box {
@@ -40,70 +40,63 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: transform 0.3s;
-      z-index: 2;
+      transition: transform 0.3s ease;
     }
 
     .sub {
-      margin-top: 10px;
+      margin-top: 12px;
       font-size: 1.9rem;
-      min-height: 2.4rem;
+      min-height: 2.5rem;
       color: #fffbe8;
       white-space: nowrap;
-      transition: transform 0.3s;
     }
 
     button {
       padding: 16px 52px;
       font-size: 1.6rem;
       border: none;
-      cursor: pointer;
+      border-radius: 14px;
       background: #fff3d6;
       color: #5a2a2a;
       font-family: 'Dancing Script', cursive;
       font-weight: 700;
-      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
     }
 
-    #no {
-      transition: transform 0.3s;
-    }
-
-    /* FULLSCREEN STATE */
     .fullscreen {
       position: fixed;
       inset: 0;
+      background: #e84a5f;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: #e84a5f;
-      z-index: 5;
+      z-index: 100;
     }
 
-    .fullscreen .yes-group {
-      transform: scale(6);
+    .fullscreen button {
+      font-size: 6rem;
+      padding: 40px 90px;
     }
 
     .fullscreen .sub {
       font-size: 3rem;
+      margin-top: 24px;
       white-space: normal;
-      margin-top: 20px;
-    }
-
-    .hide {
-      display: none;
+      text-align: center;
     }
 
     .win {
       position: fixed;
       inset: 0;
+      background: #e84a5f;
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 6rem;
       font-weight: 700;
-      background: #e84a5f;
-      z-index: 10;
+      z-index: 200;
     }
   </style>
 </head>
@@ -123,42 +116,47 @@
   </div>
 
   <script>
-    const yes = document.getElementById("yes");
-    const no = document.getElementById("no");
-    const sub = document.getElementById("subtext");
-    const yesGroup = document.getElementById("yesGroup");
     const box = document.getElementById("box");
+    const yesGroup = document.getElementById("yesGroup");
+    const yesBtn = document.getElementById("yes");
+    const noBtn = document.getElementById("no");
+    const sub = document.getElementById("subtext");
 
-    let y = 1;
-    let n = 1;
     let noCount = 0;
+    let yesScale = 1;
+    let noScale = 1;
 
     function win() {
       document.body.innerHTML = '<div class="win">HOAN HÔ!!!</div>';
     }
 
-    yes.onclick = win;
+    yesBtn.addEventListener("click", win);
 
-    no.onclick = () => {
+    noBtn.addEventListener("click", () => {
       noCount++;
 
       if (noCount === 1) sub.textContent = "Đùa em Chi ơi?";
       if (noCount === 2) sub.textContent = "Đừng mà???";
       if (noCount === 3) sub.textContent = "Anh Nghi đã bảo vậy thì oke đi em?";
 
-      if (noCount === 4) {
-        box.classList.add("fullscreen");
-        sub.textContent = "M có đồng ý không thì bảo?";
-        no.classList.add("hide");
+      if (noCount < 4) {
+        yesScale *= 1.4;
+        noScale *= 0.7;
+        yesGroup.style.transform = `scale(${yesScale})`;
+        noBtn.style.transform = `scale(${noScale})`;
         return;
       }
 
-      y *= 1.4;
-      n *= 0.7;
+      // LẦN 4
+      box.innerHTML = `
+        <div class="fullscreen">
+          <button id="yesBig">Coá</button>
+          <div class="sub">M có đồng ý không thì bảo?</div>
+        </div>
+      `;
 
-      yesGroup.style.transform = `scale(${y})`;
-      no.style.transform = `scale(${n})`;
-    };
+      document.getElementById("yesBig").addEventListener("click", win);
+    });
   </script>
 
 </body>
