@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Valentine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #e84a5f;
+      color: #fff;
+      font-family: 'Dancing Script', cursive;
+      overflow: hidden;
+    }
+
+    .box {
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 40px;
+      font-weight: 700;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .yes-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s;
+    }
+
+    .sub {
+      margin-top: 10px;
+      font-size: 1.9rem;
+      min-height: 2.4rem;
+      color: #fffbe8;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    button {
+      padding: 16px 52px;
+      font-size: 1.6rem;
+      border: none;
+      cursor: pointer;
+      font-family: 'Dancing Script', cursive;
+      font-weight: 700;
+      background: #fff3d6;
+      color: #5a2a2a;
+      border-radius: 14px;
+    }
+
+    #no {
+      transition: transform 0.3s;
+    }
+
+    /* FULLSCREEN YES (LẦN 4) */
+    .fullscreen {
+      position: fixed;
+      inset: 0;
+      background: #e84a5f;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .fullscreen button {
+      font-size: 6rem;
+      padding: 40px 80px;
+    }
+
+    .fullscreen .sub {
+      font-size: 3rem;
+      margin-top: 20px;
+      white-space: normal;
+    }
+
+    /* WIN */
+    .full {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #e84a5f;
+      font-size: 6rem;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="box" id="box">
+    <h1>would you be my valentine</h1>
+
+    <div class="buttons">
+      <div class="yes-group" id="yesGroup">
+        <button id="yes">Coá</button>
+        <div class="sub" id="subtext"></div>
+      </div>
+
+      <button id="no">Nuh uh</button>
+    </div>
+  </div>
+
+  <script>
+    const yes = document.getElementById("yes");
+    const no = document.getElementById("no");
+    const sub = document.getElementById("subtext");
+    const yesGroup = document.getElementById("yesGroup");
+    const box = document.getElementById("box");
+
+    let y = 1, n = 1;
+    let noCount = 0;
+
+    function showWin() {
+      document.body.innerHTML = '<div class="full">HOAN HÔ!!!</div>';
+    }
+
+    yes.onclick = showWin;
+
+    no.onclick = () => {
+      noCount++;
+
+      if (noCount === 1) sub.textContent = "Đùa em Chi ơi?";
+      if (noCount === 2) sub.textContent = "Đừng mà???";
+      if (noCount === 3) sub.textContent = "Anh Nghi đã bảo vậy thì oke đi em?";
+
+      if (noCount === 4) {
+        box.innerHTML = `
+          <div class="fullscreen">
+            <button id="yesBig">Coá</button>
+            <div class="sub">M có đồng ý không thì bảo?</div>
+          </div>
+        `;
+        document.getElementById("yesBig").onclick = showWin;
+        return;
+      }
+
+      y *= 1.4;
+      n *= 0.7;
+
+      yesGroup.style.transform = \`scale(\${y})\`;
+      no.style.transform = \`scale(\${n})\`;
+    };
+  </script>
+</body>
+</html>
