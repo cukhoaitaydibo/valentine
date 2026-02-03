@@ -27,7 +27,6 @@
     h1 {
       font-size: 3.5rem;
       margin-bottom: 40px;
-      font-weight: 700;
     }
 
     .buttons {
@@ -42,6 +41,7 @@
       flex-direction: column;
       align-items: center;
       transition: transform 0.3s;
+      z-index: 2;
     }
 
     .sub {
@@ -49,8 +49,8 @@
       font-size: 1.9rem;
       min-height: 2.4rem;
       color: #fffbe8;
-      text-align: center;
       white-space: nowrap;
+      transition: transform 0.3s;
     }
 
     button {
@@ -58,10 +58,10 @@
       font-size: 1.6rem;
       border: none;
       cursor: pointer;
-      font-family: 'Dancing Script', cursive;
-      font-weight: 700;
       background: #fff3d6;
       color: #5a2a2a;
+      font-family: 'Dancing Script', cursive;
+      font-weight: 700;
       border-radius: 14px;
     }
 
@@ -69,43 +69,46 @@
       transition: transform 0.3s;
     }
 
-    /* FULLSCREEN YES (LẦN 4) */
+    /* FULLSCREEN STATE */
     .fullscreen {
       position: fixed;
       inset: 0;
-      background: #e84a5f;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      z-index: 10;
+      background: #e84a5f;
+      z-index: 5;
     }
 
-    .fullscreen button {
-      font-size: 6rem;
-      padding: 40px 80px;
+    .fullscreen .yes-group {
+      transform: scale(6);
     }
 
     .fullscreen .sub {
       font-size: 3rem;
-      margin-top: 20px;
       white-space: normal;
+      margin-top: 20px;
     }
 
-    /* WIN */
-    .full {
+    .hide {
+      display: none;
+    }
+
+    .win {
       position: fixed;
       inset: 0;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #e84a5f;
       font-size: 6rem;
       font-weight: 700;
+      background: #e84a5f;
+      z-index: 10;
     }
   </style>
 </head>
 <body>
+
   <div class="box" id="box">
     <h1>would you be my valentine</h1>
 
@@ -126,14 +129,15 @@
     const yesGroup = document.getElementById("yesGroup");
     const box = document.getElementById("box");
 
-    let y = 1, n = 1;
+    let y = 1;
+    let n = 1;
     let noCount = 0;
 
-    function showWin() {
-      document.body.innerHTML = '<div class="full">HOAN HÔ!!!</div>';
+    function win() {
+      document.body.innerHTML = '<div class="win">HOAN HÔ!!!</div>';
     }
 
-    yes.onclick = showWin;
+    yes.onclick = win;
 
     no.onclick = () => {
       noCount++;
@@ -143,22 +147,19 @@
       if (noCount === 3) sub.textContent = "Anh Nghi đã bảo vậy thì oke đi em?";
 
       if (noCount === 4) {
-        box.innerHTML = `
-          <div class="fullscreen">
-            <button id="yesBig">Coá</button>
-            <div class="sub">M có đồng ý không thì bảo?</div>
-          </div>
-        `;
-        document.getElementById("yesBig").onclick = showWin;
+        box.classList.add("fullscreen");
+        sub.textContent = "M có đồng ý không thì bảo?";
+        no.classList.add("hide");
         return;
       }
 
       y *= 1.4;
       n *= 0.7;
 
-      yesGroup.style.transform = \`scale(\${y})\`;
-      no.style.transform = \`scale(\${n})\`;
+      yesGroup.style.transform = `scale(${y})`;
+      no.style.transform = `scale(${n})`;
     };
   </script>
+
 </body>
 </html>
